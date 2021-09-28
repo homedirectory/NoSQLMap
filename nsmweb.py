@@ -423,6 +423,7 @@ def postApps(victim,webPort,uri,https,verb,postData,requestHeaders, args = None)
         appURL = "https://" + str(victim) + ":" + str(webPort) + str(uri)
 
     try:
+
         body = urllib.urlencode(postData)
         req = urllib2.Request(appURL,body, requestHeaders)
         appRespCode = urllib2.urlopen(req).getcode()
@@ -449,6 +450,13 @@ def postApps(victim,webPort,uri,https,verb,postData,requestHeaders, args = None)
     except NoSQLMapException,e:
         print e
         print "Looks like the server didn't respond.  Check your options."
+
+    except e:
+        print(e)
+        print("Some other error occured.")
+        print("-"*10+"REQUEST"+"-"*10)
+        print(appUrl, body, requestHeaders)
+        print("-"*10+"REQUEST"+"-"*10)
 
     if appUp == True:
 

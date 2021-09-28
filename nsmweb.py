@@ -451,8 +451,7 @@ def postApps(victim,webPort,uri,https,verb,postData,requestHeaders, args = None)
         print e
         print "Looks like the server didn't respond.  Check your options."
 
-    except e:
-        print(e)
+    except:
         print("Some other error occured.")
         print("-"*10+"REQUEST"+"-"*10)
         print(appUrl, body, requestHeaders)

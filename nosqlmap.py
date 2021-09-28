@@ -509,36 +509,19 @@ def options():
         elif select == "x":
             return
 
-def build_parser():
-    parser = argparse.ArgumentParser()
-    parser.add_argument("--attack", help="1 = NoSQL DB Access Attacks, 2 = NoSQL Web App attacks, 3 - Scan for Anonymous platform Access", type=int, choices=[1,2,3])
-    parser.add_argument("--platform", help="Platform to attack", choices=["MongoDB", "CouchDB"], default="MongoDB")
-    parser.add_argument("--victim", help="Set target host/IP (ex: localhost or 127.0.0.1)")
-    parser.add_argument("--dbPort", help="Set shell listener port", type=int)
-    parser.add_argument("--myIP",help="Set my local platform/Shell IP")
-    parser.add_argument("--myPort",help="Set my local platform/Shell port", type=int)
-    parser.add_argument("--webPort", help="Set web app port ([1 - 65535])", type=int)
-    parser.add_argument("--uri", help="Set App Path. For example '/a-path/'. Final URI will be [https option]://[victim option]:[webPort option]/[uri option]")
-    parser.add_argument("--httpMethod", help="Set HTTP Request Method", choices=["GET","POST"], default="GET")
-    parser.add_argument("--https", help="Toggle HTTPS", choices=["ON", "OFF"], default="OFF")
-    parser.add_argument("--verb", help="Toggle Verbose Mode", choices=["ON", "OFF"], default="OFF")
-    parser.add_argument("--postData", help="Enter POST data in a comma separated list (i.e. param name 1,value1,param name 2,value2)", default="")
-    parser.add_argument("--requestHeaders", help="Request headers in a comma separated list (i.e. param name 1,value1,param name 2,value2)", default="")
-
-    modules = [nsmcouch, nsmmongo, nsmscan, nsmweb]
-    for module in modules:
-        group = parser.add_argument_group(module.__name__)
-        for arg in module.args():
-            group.add_argument(arg[0], help=arg[1])
-
-    return parser
-
-def signal_handler(signal, frame):
-    print "\n"
-    print "CTRL+C detected.  Exiting."
-    sys.exit()
-
-if __name__ == '__main__':
+:
     parser = build_parser()
     args = parser.parse_args()
+    # debug
+    args.attack = 2
+    args.victim = "dashboard.evrythng.com"
+    args.webPort = 443
+    args.uri = "/api/join"
+    args.httpMethod = "POST"
+    args.https = "ON"
+    args.verb = "ON"
+    args.postData = "o,1,ac,1,firstName,lastName,nothing322,isTermsAccepted,true"
+    args.requestHeaders = "Content-Type,application/json"
+    print(args)
+    # debug
     main(args)

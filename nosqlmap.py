@@ -69,7 +69,7 @@ def mainMenu():
     global requestHeaders
     global postData
 
-    mmSelect = True
+    mmSelect = False
     while mmSelect:
         os.system('clear')
         print " _  _     ___  ___  _    __  __           "

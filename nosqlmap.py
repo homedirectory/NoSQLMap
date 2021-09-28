@@ -12,7 +12,6 @@ import nsmweb
 import os
 import signal
 import ast
-import json
 
 import argparse
 
@@ -90,8 +89,8 @@ def mainMenu():
                     nsmcouch.netAttacks(victim, dbPort, myIP)
 
             # Check minimum required options
-            else:
-                raw_input("Target not set! Check options.  Press enter to continue...")
+        else:
+            raw_input("Target not set! Check options.  Press enter to continue...")
 
 
         elif select == "3":
@@ -131,12 +130,7 @@ def build_request_headers(reqHeadersIn):
     requestHeaders = dict(zip(headerNames, headerValues))
     return requestHeaders
 
-def build_post_data(postDataIn=None, filename_json=""):
-    if len(filename_json) > 0:
-        with open(filename_json, 'r') as f:
-            postData = json.load(f)
-            return postData
-
+def build_post_data(postDataIn):
     pdArray = postDataIn.split(",")
     paramNames = pdArray[0::2]
     paramValues = pdArray[1::2]
@@ -346,20 +340,10 @@ def options():
                     optionSet[3] = True
 
                 elif httpMethod == "2":
-                    print "1-POST data from .json file"
-                    print "2-Enter POST data in a comma separated list (param_name1,value1,param_name2,value2,...)"
-                    postDataSource = raw_input("Select an option: ")
-                    
-                    if postDataSource == "1":
-                        jsonFilename = raw_input("Enter the filename: ")
-                        postData = build_post_data(filename_json=jsonFilename)
-
-                    elif postDataSource == "2":
-                        print "POST request set"
-                        postDataIn = raw_input("Enter POST data in a comma separated list (i.e. param name 1,value1,param name 2,value2)\n")
-                        postData = build_post_data(postDataIn)
-
+                    print "POST request set"
                     optionSet[3] = True
+                    postDataIn = raw_input("Enter POST data in a comma separated list (i.e. param name 1,value1,param name 2,value2)\n")
+                    postData = build_post_data(postDataIn)
                     httpMethod = "POST"
 
                 else:
